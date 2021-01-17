@@ -20,6 +20,7 @@
         <Compile Include="Views\Tabs\StylesDemo.fs" />
         <Compile Include="Views\Tabs\TextBoxDemo.fs" />
         <Compile Include="Views\Tabs\GridPatchDemo.fs" />
+        <Compile Include="Views\Tabs\DragDropDemo.fs" />
         <Compile Include="Views\Tabs\CalendarDatePickerDemo.fs" />
         <Compile Include="Views\Tabs\DatePickerDemo.fs" />
         <Compile Include="Views\Tabs\TimePickerDemo.fs" />

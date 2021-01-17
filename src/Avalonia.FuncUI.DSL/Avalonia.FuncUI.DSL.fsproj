@@ -77,6 +77,7 @@
         <Compile Include="ComboBox.fs" />
         <Compile Include="CheckBox.fs" />
         <Compile Include="Carousel.fs" />
+        <Compile Include="DragDrop.fs" />
         <Compile Include="Image.fs" />
         <Compile Include="ListBox.fs" />
         <Compile Include="RangeBase.fs" />

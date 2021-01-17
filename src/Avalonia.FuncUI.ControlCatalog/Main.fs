@@ -1,6 +1,8 @@
 ﻿namespace Avalonia.FuncUI.ControlCatalog
 
+open System
 open Avalonia
+open Avalonia.Logging.Serilog
 open Avalonia.FuncUI.Components.Hosts
 open Avalonia.FuncUI.Elmish
 open Avalonia.Themes.Fluent
@@ -41,6 +43,7 @@ type App() =
 
 module Program =
 
+    [<STAThread>]
     [<EntryPoint>]
     let main(args: string[]) =
         AppBuilder
