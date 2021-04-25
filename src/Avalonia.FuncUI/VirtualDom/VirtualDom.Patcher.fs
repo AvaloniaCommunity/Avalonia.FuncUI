@@ -11,6 +11,11 @@ module internal rec Patcher =
     open Avalonia.FuncUI.Types
     open System.Threading
 
+    let private shouldPatch (value: obj) (viewElement: ViewDelta) =
+        value <> null
+        && value.GetType() = viewElement.ViewType
+        && not viewElement.KeyDidChange
+    
     let private patchSubscription (view: IControl) (attr: SubscriptionDelta) : unit =
         let subscriptions =
             match ViewMetaData.GetViewSubscriptions(view) with
@@ -88,10 +93,10 @@ module internal rec Patcher =
                     if index + 1 <= collection.Count then
                         let item = collection.[index]
 
-                        if item.GetType() = viewElement.ViewType then
+                        if shouldPatch item viewElement then
                             // patch
                             match item with
-                            | :? Avalonia.Controls.IControl as control -> patch(control, viewElement)
+                            | :? IControl as control -> patch(control, viewElement)
                             | _ ->
                                 // replace
                                 let newItem = Patcher.create viewElement
@@ -164,7 +169,7 @@ module internal rec Patcher =
             | Some viewElement ->
                 let value = view.GetValue(property)
 
-                if value <> null && value.GetType() = viewElement.ViewType then
+                if shouldPatch value viewElement then
                     Patcher.patch(value :?> IControl, viewElement)
                 else
                     let createdControl = Patcher.create(viewElement)
@@ -181,7 +186,7 @@ module internal rec Patcher =
                     | ValueSome getter -> getter(view)
                     | _ -> failwith "Property Accessor needs a getter"
 
-                if value <> null && value.GetType() = viewElement.ViewType then
+                if shouldPatch value viewElement then
                     Patcher.patch(value :?> IControl, viewElement)
                 else
                     let createdControl = Patcher.create(viewElement)
